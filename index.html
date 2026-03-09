@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Srinivas Allanki — AI Engineer</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #060913;
+      /* Ultra Deep navy dark background */
+      --card-bg: rgba(11, 17, 32, 0.85);
+      /* Much darker, highly opaque cards for legibility */
+      --card-border: rgba(56, 189, 248, 0.2);
+      /* Subtle cyan border */
+      --card-hover: rgba(20, 30, 50, 0.95);
+      --text-main: #f8fafc;
+      /* Off-white text */
+      --text-muted: #94a3b8;
+      /* Light slate muted text */
+      --text-light: #cbd5e1;
+      --accent: #38bdf8;
+      /* Bright Cyan */
+      --accent-gradient: linear-gradient(135deg, #38bdf8, #818cf8);
+      /* Cyan to Periwinkle Purple */
+      --accent-glow: rgba(56, 189, 248, 0.25);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+
+    @keyframes moveDots {
+      0% {
+        background-position: 0 0, 20px 20px;
+      }
+
+      100% {
+        background-position: 40px 40px, 60px 60px;
+      }
+    }
+
+    @keyframes gridPan {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+
+    @keyframes diagSlide {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: -40px 40px;
+      }
+    }
+
+    @keyframes floatUp {
+      0% {
+        background-position: 0 100px;
+      }
+
+      100% {
+        background-position: 0 0;
+      }
+    }
+
+    @keyframes floatOrbs {
+      0% {
+        background-position: 0% 0%, 100% 100%;
+      }
+
+      50% {
+        background-position: 100% 100%, 0% 0%;
+      }
+
+      100% {
+        background-position: 0% 0%, 100% 100%;
+      }
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at center, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at center, rgba(129, 140, 248, 0.05) 0%, transparent 50%);
+      background-size: 150vw 150vh, 120vw 120vh;
+      animation: floatOrbs 30s ease-in-out infinite;
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10, 15, 24, 0.85);
+      border-bottom: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+
+
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 5rem;
+      position: relative;
+    }
+
+    /* Decorative glowing orb */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      left: 10%;
+      width: 40vw;
+      height: 40vw;
+      max-width: 600px;
+      max-height: 600px;
+      background: var(--accent-gradient);
+      filter: blur(120px);
+      opacity: 0.12;
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 5%;
+      right: 10%;
+      width: 30vw;
+      height: 30vw;
+      max-width: 500px;
+      max-height: 500px;
+      background: #7c3aed;
+      filter: blur(120px);
+      opacity: 0.08;
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      z-index: 1;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3.2rem, 6.5vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      color: var(--text-main);
+    }
+
+    .hero-name-block {
+      padding-top: 2rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .hero-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .hero-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.6rem;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .hero-summary {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 2.2rem;
+      font-weight: 400;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .pill.dark {
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--accent);
+      border-color: rgba(37, 99, 235, 0.2);
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary,
+    .btn-cream {
+      padding: 0.9rem 2.2rem;
+      background: var(--accent-gradient);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-primary:hover,
+    .btn-cream:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+    }
+
+    .btn-outline,
+    .btn-cream-outline {
+      padding: 0.9rem 2.2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover,
+    .btn-cream-outline:hover {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.05);
+      transform: translateY(-3px);
+      color: #fff;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 7rem 4rem;
+      position: relative;
+      max-width: 1250px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .section-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #60a5fa;
+      opacity: 0.9;
+    }
+
+    h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    /* GLASS CARDS */
+    .stat-box,
+    .skill-box,
+    .project-card,
+    .cert-box,
+    .research-card,
+    .award-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-box::before,
+    .skill-box::before,
+    .project-card::before,
+    .cert-box::before,
+    .award-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.03), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .stat-box:hover::before,
+    .skill-box:hover::before,
+    .project-card:hover::before,
+    .cert-box:hover::before,
+    .award-box:hover::before {
+      opacity: 1;
+    }
+
+    .stat-box:hover,
+    .skill-box:hover,
+    .project-card:hover,
+    .cert-box:hover,
+    .research-card:hover,
+    .award-box:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      background: var(--card-hover);
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .about-text strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 3rem 1.5rem;
+    }
+
+    .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* SKILLS NEW LAYOUT */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .section-ambient-img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      object-fit: cover;
+      height: 100%;
+      max-height: 550px;
+      border: 1px solid var(--card-border);
+    }
+
+    .skill-category {
+      background: var(--card-bg);
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.4s ease;
+    }
+
+    .skill-category:hover {
+      transform: translateY(-8px);
+      border-color: rgba(37, 99, 235, 0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    }
+
+
+
+    .skill-category h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .skill-category .skill-icon {
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 0.35rem 0.9rem;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .skill-box:hover .tag {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .tag:hover {
+      animation: tagJiggle 0.4s ease forwards;
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 4px 12px var(--accent-glow);
+      border-color: var(--accent);
+      z-index: 10;
+      position: relative;
+    }
+
+    @keyframes tagJiggle {
+      0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+      }
+
+      25% {
+        transform: translateY(-4px) scale(1.05) rotate(-3deg);
+      }
+
+      50% {
+        transform: translateY(-2px) scale(1.05) rotate(3deg);
+      }
+
+      75% {
+        transform: translateY(-4px) scale(1.05) rotate(-1deg);
+      }
+
+      100% {
+        transform: translateY(-3px) scale(1.05) rotate(0deg);
+      }
+    }
+
+    .tag.hi {
+      background: rgba(37, 99, 235, 0.08);
+      border-color: rgba(37, 99, 235, 0.2);
+      color: var(--accent);
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), rgba(37, 99, 235, 0.1));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 4rem;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -3rem;
+      top: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 15px var(--accent-glow);
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item:hover .timeline-dot {
+      background: var(--accent);
+      transform: scale(1.2);
+    }
+
+    .timeline-meta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .timeline-item h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+    }
+
+    .timeline-item .company {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-item p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      line-height: 1.8;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .project-card {
+      padding: 2.5rem;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-num {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--text-light);
+      margin-bottom: 1.2rem;
+    }
+
+    .project-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .project-card p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1.8rem;
+      flex-grow: 1;
+      line-height: 1.7;
+    }
+
+    /* PROGRESS BAR */
+    .progress-wrapper {
+      margin-bottom: 1.8rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-gradient);
+      border-radius: 4px;
+      width: 0;
+      transition: width 1s ease-out;
+    }
+
+    /* BUTTONS INSIDE CARDS */
+    .btn-project {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      /* Reduced size */
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      /* Reduced padding */
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--text-main);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      align-self: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-project:hover {
+      background: var(--accent-glow);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .btn-project svg {
+      width: 14px;
+      /* Reduced icon size */
+      height: 14px;
+      fill: currentColor;
+    }
+
+    /* CERTS & AWARDS */
+    .certs-grid,
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .cert-issuer,
+    .award-rank {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .cert-box h3,
+    .award-box h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .cert-box p,
+    .award-box p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .award-box {
+      border-top: 3px solid rgba(37, 99, 235, 0.3);
+    }
+
+    .award-box:hover {
+      border-top-color: var(--accent);
+    }
+
+    .research-card {
+      border-left: 4px solid var(--accent);
+      max-width: 1000px;
+    }
+
+    .research-journal {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .research-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .research-card p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .accuracy-badge {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+    }
+
+    /* CONTACT */
+    #contact {
+      text-align: center;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 6rem 2rem;
+    }
+
+    #contact .section-header {
+      justify-content: center;
+      border-bottom: none;
+      margin-bottom: 1.5rem;
+    }
+
+    #contact h2 {
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .contact-sub {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin: 0 auto 3.5rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 4rem;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1250px;
+      margin: 0 auto;
+      background: var(--bg);
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ANIMATIONS & RESPONSIVE */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-ready {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .animate-up {
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1024px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .hero-grid {
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1.2rem 2rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      section {
+        padding: 5rem 2rem;
+      }
+
+      #hero {
+        padding: 8rem 2rem 4rem;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+
+      .hero-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-tag::before {
+        display: none;
+      }
+
+      .hero-name-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-pills,
+      .hero-ctas,
+      .contact-links {
+        justify-content: center;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .projects-grid,
+      .certs-grid,
+      .awards-grid,
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Srinivas Allanki</a>
+    <ul class="nav-links">
+      <li><a href="#about">About Me</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-left animate-up" style="animation-delay: 0.1s;">
+        <div class="hero-tag">AI Engineer and Researcher</div>
+        <h1>Building<br>Intelligent<br>Systems.</h1>
+        <div class="hero-name-block">
+          <div class="hero-name">Srinivas Allanki</div>
+          <div class="hero-title">Jersey City, NJ &nbsp;|&nbsp; aspvc02@gmail.com &nbsp;|&nbsp; +1 732-470-5207</div>
+        </div>
+      </div>
+      <div class="hero-right animate-up" style="animation-delay: 0.3s;">
+        <p class="hero-summary">
+          AI Engineer specializing in production-ready machine learning systems, large language model applications, and
+          computer vision solutions. MS in Data Analytics and Visualization from Yeshiva University. AWS
+          Certified
+          Solutions Architect and Data Engineer. <br><br>Published researcher and two-time national and international
+          award
+          winner.
+        </p>
+        <div class="hero-pills">
+          <span class="pill dark">MS Data Analytics</span>
+          <span class="pill dark">Published Researcher</span>
+          <span class="pill dark">AWS Certified x2</span>
+          <span class="pill dark">Award Winner</span>
+          <span class="pill">TensorFlow</span>
+          <span class="pill">PyTorch</span>
+          <span class="pill">OpenCV</span>
+          <span class="pill">LLMs</span>
+          <span class="pill">RAG</span>
+          <span class="pill">Docker</span>
+        </div>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="#contact" class="btn-outline">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="animate-up">
+    <div class="section-header">
+      <h2>About Me</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text glass-card">
+        <p>I am an AI engineer with a strong foundation in machine learning, computer vision, and large language model
+          development. I hold a Master of Science in Data Analytics and Visualization from Yeshiva University, Katz
+          School of Science and Health, New York, graduated December 2025.</p>
+        <p>My professional experience spans building <strong>production-grade computer vision pipelines</strong>
+          deployed on Linux servers, designing <strong>LLM agents and RAG systems</strong> for enterprise use cases, and
+          optimizing vision algorithms for embedded hardware including Jetson Nano and Raspberry Pi.</p>
+        <p>I have contributed to <strong>peer-reviewed research</strong> published in MDPI Engineering Proceedings, and
+          have been recognized at both national and international levels for technical work in AI and robotics.</p>
+      </div>
+      <div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-num">2</div>
+            <div class="stat-label">AWS Certifications</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">MS</div>
+            <div class="stat-label">Yeshiva University</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Published Paper</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">2</div>
+            <div class="stat-label">Recognitions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="animate-up">
+    <div class="section-header">
+      <h2>Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category animate-up" style="animation-delay: 0.1s;">
+        <h3><span class="skill-icon">--</span> AI and ML Engineering</h3>
+        <div class="tags">
+          <span class="tag hi">TensorFlow</span>
+          <span class="tag hi">PyTorch</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Keras</span>
+          <span class="tag">Large Language Models</span>
+          <span class="tag">Agent Systems</span>
+          <span class="tag">RAG Pipelines</span>
+          <span class="tag">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><span class="skill-icon">--</span> Computer Vision and Deep Learning</h3>
+        <div class="tags">
+          <span class="tag hi">OpenCV</span>
+          <span class="tag hi">CNNs and RNNs</span>
+          <span class="tag">Transformers</span>
+          <span class="tag">MobileNet SSD</span>
+          <span class="tag">Deep SORT</span>
+          <span class="tag">Transfer Learning</span>
+          <span class="tag">Object Detection</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><span class="skill-icon">--</span> MLOps and Cloud</h3>
+        <div class="tags">
+          <span class="tag hi">AWS SAA</span>
+          <span class="tag hi">AWS DEA</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Lambda / EC2 / S3</span>
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Flask</span>
+          <span class="tag">CI/CD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="animate-up">
+    <div class="section-header">
+      <h2>Education</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">2023 — Dec 2025 &nbsp;|&nbsp; New York, NY</div>
+        <h3>Master of Science — Data Analytics and Visualization</h3>
+        <div class="company">Yeshiva University, Katz School of Science and Health</div>
+        <p>Graduate studies in applied machine learning, data engineering, and interactive visualization. Developed
+          multiple end-to-end AI systems and analytics pipelines across coursework and independent research.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="animate-up">
+    <div class="section-header">
+      <h2>Experience</h2>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">Oct 2025 — Dec 2025 &nbsp;|&nbsp; Remote</div>
+        <h3>AI Agent Builder Intern</h3>
+        <div class="company">NeuralSeek</div>
+        <p>Built an LLM-based agent on the NeuralSeek platform to automate employee performance evaluation, processing
+          internal HR data and project metrics for management insights. Gained hands-on experience with prompt
+          engineering, data integration, and enterprise-grade agent configuration workflows for intelligent automation
+          systems.</p>
+        <div class="tags" style="margin-top:0.85rem;">
+          <span class="tag">LLMs</span><span class="tag">Prompt Engineering</span><span class="tag">Agent
+            Systems</span><span class="tag">HR Analytics</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">Aug 2022 — Jul 2023 &nbsp;|&nbsp; Vijayawada, India</div>
+        <h3>AI Research Assistant</h3>
+        <div class="company">Koneru Lakshmaiah Educational Foundation</div>
+        <p>Engineered an intelligent parking system using MobileNetSSDv3 for real-time object detection and Deep SORT
+          for multi-object tracking across video streams. Integrated RTMP camera feeds with a computer vision pipeline
+          for automated space occupancy detection. Deployed on a Linux server using Docker containerization, reducing
+          driver wait time by 40%.</p>
+        <div class="tags" style="margin-top:0.85rem;">
+          <span class="tag">MobileNet SSD</span><span class="tag">Deep SORT</span><span class="tag">Docker</span><span
+            class="tag">OpenCV</span><span class="tag">Linux</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">Feb 2022 — Jun 2022 &nbsp;|&nbsp; Pune, India</div>
+        <h3>Robotics and Computer Vision Intern</h3>
+        <div class="company">HunarPro Academy of Robotics</div>
+        <p>Designed and implemented computer vision systems enabling autonomous robotic decision-making in competitive
+          environments. Optimized vision algorithms for embedded platforms including Jetson Nano, Studica VMX, and
+          Raspberry Pi, achieving low-latency inference for real-time robotic control.</p>
+        <div class="tags" style="margin-top:0.85rem;">
+          <span class="tag">Computer Vision</span><span class="tag">Jetson Nano</span><span class="tag">Raspberry
+            Pi</span><span class="tag">Robotics</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="animate-up">
+    <div class="section-header">
+      <h2>Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop"
+          style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;"
+          alt="Educational LLM">
+        <div class="project-num">PROJECT 01</div>
+        <h3>Offline Educational LLM — South Africa</h3>
+        <p>Offline-capable RAG chatbot providing curriculum-aligned educational support to students in low-connectivity
+          regions. Edge-server infrastructure connects multiple devices to centralized processing for resource-efficient
+          LLM inference, with grade-level language adaptation.</p>
+
+        <div class="progress-wrapper">
+          <div class="progress-header">
+            <span>Development Progress</span>
+            <span>78%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 78%;"></div>
+          </div>
+        </div>
+
+        <div class="tags"><span class="tag">RAG</span><span class="tag">Edge Inference</span><span
+            class="tag">LLM</span><span class="tag">Offline-first</span></div>
+      </div>
+
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=2070&auto=format&fit=crop"
+          style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;"
+          alt="Urban Parking System">
+        <div class="project-num">PROJECT 02</div>
+        <h3>Park Connect — Parking Marketplace</h3>
+        <p>Full-stack marketplace for urban parking challenges. Supabase (PostgreSQL) backend, React frontend on Vercel,
+          geolocation services, and ETL pipeline to ClickHouse for real-time analytics. Achieved 48% conversion rate
+          from initial property-owner outreach.</p>
+        <a href="https://smart-parking-two-sigma.vercel.app/" target="_blank" class="btn-project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          Visit Website
+        </a>
+        <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">ClickHouse</span><span
+            class="tag">React</span><span class="tag">ETL</span></div>
+      </div>
+
+      <div class="project-card">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Asian_Paints_Logo.svg/2048px-Asian_Paints_Logo.svg.png"
+          style="width: 100%; height: 180px; object-fit: contain; background: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;"
+          alt="Asian Paints Logo">
+        <div class="project-num">PROJECT 03</div>
+        <h3>Asian Paints Predictive Analytics</h3>
+        <p>Demand forecasting model for export strategy using Python, processing 10 years of historical financial data
+          across 50,000+ records. Built a full cleaning pipeline with HSN code standardization and regional mapping for
+          time-series forecasting.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Time-series</span><span
+            class="tag">Forecasting</span><span class="tag">Data Pipeline</span></div>
+      </div>
+
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=2070&auto=format&fit=crop"
+          style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;"
+          alt="Intelligent Parking System">
+        <div class="project-num">PROJECT 04</div>
+        <h3>Intelligent Parking Navigation System</h3>
+        <p>Production CV system using MobileNetSSDv3 and Deep SORT for real-time vehicle tracking across multi-floor
+          structures. Integrated RTMP camera feeds, deployed on Linux with Docker. Reduced driver wait time by 40%.</p>
+
+        <a href="https://github.com/SrinivasA06/Docker/tree/main/Docker-DS" target="_blank" class="btn-project">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+          </svg>
+          View Repository
+        </a>
+
+        <div class="tags"><span class="tag">MobileNet SSD</span><span class="tag">Deep SORT</span><span
+            class="tag">OpenCV</span><span class="tag">Docker</span></div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- HOBBY VENTURES -->
+  <section id="hobby" class="animate-up">
+    <div class="section-header">
+      <h2>Venture</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-num">VENTURE</div>
+        <h3>Macros Meet Masala — Cloud Kitchen Concept</h3>
+        <p>End-to-end business plan for a cloud kitchen targeting Hyderabad's fitness community.
+          <br>
+          High-protein South Indian cuisine, FSSAI-compliant operations, unit economics model, and go-to-market
+          strategy
+          across Swiggy and
+          Zomato.
+        </p>
+        <div class="tags"><span class="tag">Market Analysis</span><span class="tag">Financial Modeling</span><span
+            class="tag">Product Strategy</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications" class="animate-up">
+    <div class="section-header">
+      <h2>Certifications</h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-box">
+        <div class="cert-issuer">Amazon Web Services &nbsp;|&nbsp; December 2024</div>
+        <h3>AWS Certified Solutions Architect — Associate</h3>
+        <p>Cloud infrastructure design, security architecture, cost optimization, and resilient system design on AWS.
+        </p>
+      </div>
+      <div class="cert-box">
+        <div class="cert-issuer">Amazon Web Services &nbsp;|&nbsp; January 2025</div>
+        <h3>AWS Certified Data Engineer — Associate</h3>
+        <p>Data ingestion, transformation pipelines, workflow orchestration, and analytics solutions on the AWS
+          ecosystem.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research" class="animate-up">
+    <div class="section-header">
+      <h2>Research</h2>
+    </div>
+    <div class="research-card">
+      <div class="research-journal">MDPI Engineering Proceedings &nbsp;|&nbsp; Vol. 34, No. 1 &nbsp;|&nbsp; March 2023
+        &nbsp;|&nbsp; Open Access &nbsp;|&nbsp; DOI: 10.3390/HMAM2-14158</div>
+      <h3>Advanced Driver Fatigue Detection by Integration of OpenCV DNN Module and Deep Learning</h3>
+      <p>A comparative study of four face detection algorithms — Viola-Jones, Dlib, MTCNN, and OpenCV DNN — applied to
+        real-time driver drowsiness monitoring. A modified convolutional neural network classifier was developed and
+        trained on the Kaggle Drowsiness Dataset, achieving 96.8% accuracy and outperforming four prior state-of-the-art
+        methods. The OpenCV DNN module demonstrated superior performance in handling occlusion, fast head movements, and
+        side-face detection at 46 frames per second. Presented at the International Conference on Holography Meets
+        Advanced Manufacturing, Institute of Physics, University of Tartu, Estonia, February 2023. Co-authored with
+        researchers from KL University, Bharath Institute, and Reva University.</p>
+      <span class="accuracy-badge">System Accuracy: 96.8%</span>
+      <div class="tags" style="margin-top:1.1rem;">
+        <span class="tag">OpenCV DNN</span><span class="tag">CNN</span><span class="tag">Face Detection</span><span
+          class="tag">Deep Learning</span><span class="tag">Road Safety</span>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <a href="https://www.mdpi.com/2673-4591/34/1/15" target="_blank" class="btn-outline"
+          style="font-size:0.75rem; padding:0.6rem 1.6rem; letter-spacing:0.1em; display:inline-block;">View Publication
+          on MDPI</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section id="awards" class="animate-up">
+    <div class="section-header">
+      <h2>Awards and Recognition</h2>
+    </div>
+    <div class="awards-grid">
+      <div class="award-box">
+        <div class="award-rank">International Award &nbsp;|&nbsp; 3rd Prize &nbsp;|&nbsp; February 2023</div>
+        <h3>Holography Meets Advanced Manufacturing — International Conference</h3>
+        <p>Awarded by ERA Chair CIPHR Group, Institute of Physics, University of Tartu, Estonia. Recognized for poster
+          presentation on advanced driver fatigue detection. Associated with KL University.</p>
+      </div>
+      <div class="award-box">
+        <div class="award-rank">National Award &nbsp;|&nbsp; 1st Place &nbsp;|&nbsp; January 2022</div>
+        <h3>IndiaSkills — Mobile Robotics Competition</h3>
+        <p>Ranked 1st among 12 teams from across India in the Mobile Robotics trade. Organized by the National Skill
+          Development Corporation (NSDC) under the Ministry of Skill Development and Entrepreneurship, Government of
+          India.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="animate-up">
+    <div class="section-header">
+      <h2>Contact</h2>
+    </div>
+    <p class="contact-sub">Open to AI and ML engineering, data analytics, and data engineering roles across the United
+      States.</p>
+    <div class="contact-links" style="align-items: center;">
+      <a href="mailto:aspvc02@gmail.com" class="btn-primary" aria-label="Email"
+        style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border-radius: 50%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/in/srinivas-allanki-b654381aa/" target="_blank" class="btn-primary"
+        aria-label="LinkedIn"
+        style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border-radius: 50%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+          <rect x="2" y="9" width="4" height="12"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+      </a>
+      <a href="https://github.com/SrinivasA06" target="_blank" class="btn-primary" aria-label="GitHub"
+        style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border-radius: 50%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Srinivas Allanki &nbsp;|&nbsp; Jersey City, NJ &nbsp;|&nbsp; +1 732-470-5207</p>
+    <p>Open to Work &nbsp;|&nbsp; AI Engineering &nbsp;|&nbsp; 2025</p>
+  </footer>
+
+  <script>
+    // Initialize the Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Remove the initial hidden state class
+          entry.target.classList.remove('fade-ready');
+          // Add the animation class
+          entry.target.classList.add('animate-up');
+          // Stop observing once animated
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Prepare all elements for animation
+    document.querySelectorAll('.animate-up').forEach((el) => {
+      // Swap animate-up with fade-ready for the initial state before scrolling
+      el.classList.remove('animate-up');
+      el.classList.add('fade-ready');
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+
+</html>
